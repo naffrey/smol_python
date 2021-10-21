@@ -4,7 +4,11 @@ from .models import Item
 # Create your views here.
 
 
-def item_list(request):
-    item = Item.objects.all().values('name', 'author', 'photo_url')
-    item_list = list(item)
-    return JsonResponse(item_list, safe=False)
+class ItemList(generics.ListCreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
+class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
